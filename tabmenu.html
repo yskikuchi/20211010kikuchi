@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+      <tab-label v-on:clicked="clickEvent($event)">
+      </tab-label>
+        <content1 v-show="active===1"></content1>
+        <content2 v-show="active===2"></content2>
+        <content3 v-show="active===3"></content3>
+  </div>
+  <script>
+    Vue.component('tab-label', {
+      template: `<ul>
+            <li class="tab"
+            v-for="item in list"
+            :key="item.id"
+            @click="selectTab(item.id)"
+            :class="{'active': isActive === item.id}">
+            {{item.label}}
+            </li>
+          </ul>`,
+      data:function() {
+        return {
+        isActive: 0,
+        list: [
+          { id: 1, label: 'Tab1'},
+          { id: 2, label: 'Tab2'},
+          { id: 3, label: 'Tab3'},
+        ]}
+        },
+        methods: {
+        selectTab: function (num) {
+          this.$emit('clicked', num);
+          this.isActive = num;
+        }
+          }
+    })
+    Vue.component('content1',{
+      template:`<h3>コンテンツ１</h3>`
+    })
+    Vue.component('content2', {
+      template: `<h3>コンテンツ2</h3>`
+    })
+    Vue.component('content3', {
+      template: `<h3>コンテンツ3</h3>`
+    })
+
+
+    const vn = new Vue({
+      el: "#app",
+      data:{
+        active:0,
+      },
+      methods:{
+        clickEvent: function(e){
+          this.active = e;
+        }
+      },
+    });
+  </script>
+
+</body>
+
+<style>
+ul{
+display: flex;
+}
+
+.tab{
+width: 100px;
+border: 1px solid rgb(207, 207, 207);
+text-align: center;
+list-style: none;
+}
+
+h3{
+margin-left:2em;
+}
+.active{
+background: black;
+color: #fff;
+}
+</style>
+
+</html>

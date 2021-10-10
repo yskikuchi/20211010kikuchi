@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <ul>
+      <input type="text" v-model="text">
+      <li v-for="item in filteredNames">{{item}}</li>
+    </ul>
+  </div>
+  <script>
+    const vm = new Vue({
+      el: "#app",
+      data(){
+        return {
+        text:'',
+        list:['佐藤','山田','鈴木','田中',]
+      }},
+      computed:{
+        filteredNames(){
+          let names=[];
+          for(let i =0; i<this.list.length; i++){
+            let name = this.list[i];
+            if(name.indexOf(this.text) !== -1){
+              names.push(name);
+            }
+          }
+          return names;
+        }}
+    });
+  </script>
+
+</body>
+
+<style>
+
+li{
+  list-style: none;
+}
+input{
+  border: 3px solid lightgreen;
+  border-radius: 5px;
+}
+input:focus{
+  outline: 0;
+}
+
+</style>
+
+</html>
